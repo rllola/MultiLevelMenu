@@ -1,0 +1,17 @@
+	<li ng-click="elem.open = false; level.open = level.open-1; newLevel(level.open);">
+		<div class="col-xs-1"></div><a>Retour</a>
+	</li>
+		<li ng-repeat="subElem in elem.children | filter:elem.word">
+			<div ng-if="subElem.children.length > 0" class="clikable" ng-click="subElem.open=true; level.open = level.open+1;newLevel(level.open);"><div class="col-xs-1" style="margin-right: 5%;"><span  ng-if="subElem.children.length > 0" class="glyphicon glyphicon-chevron-left"></span></div><a>{{ subElem.title }}</a></div>
+			<div class="col-xs-1" style="margin-right: 5%;"></div><a ng-if="!(subElem.children.length > 0)">{{ subElem.title }}</a>
+			<div  class="level" ng-show="subElem.level <= level.open && subElem.open" ng-if="subElem.children.length > 0" >
+				<div ng-if="subElem.level < level.open" class="opac" ng-click="level.open = subElem.level; newLevel(level.open);"></div>
+					<div id="{{subElem.code}}" ng-class="{'scrollable' : subElem.level == level.open}" ng-init="subElem.level = elem.level+1;" perfect-scrollbar>
+						<h2>{{subElem.title}}</h2>
+						<h2 ng-if="subElem.level < level.open" class="rotate">{{elem.title}}</h2>
+						    <span class="glyphicon glyphicon-search"></span><input type="text" placeholder="Search" ng-model="subElem.word"/>
+						<ul ng-include src="'views/menu.html'" ng-init="elem=subElem;" ng-model="elem">
+						</ul>
+					</div>
+			</div>
+	</li>

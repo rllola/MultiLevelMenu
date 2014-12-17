@@ -1,0 +1,38 @@
+<div id="menu" class="col-xs-3 col-md-2">
+  <div ng-if="0 != level.open" class="opac" ng-click="level.open = 0; newLevel(level.open);"></div>
+  <div perfect-scrollbar ng-class="{'scrollable' : 0 == level.open}" >
+    <h1>Facets</h1>
+    <h1 ng-if="0 < level.open" class="rotate">Facets</h1>
+    <span class="glyphicon glyphicon-search"></span><input type="text" placeholder="Search" ng-model="word"/>
+    <ul>
+      <li ng-repeat="elem in menu | filter:word" ng-init="elem.open = false;">
+        <div class="col-xs-1" style="margin-right: 5%;">
+          <div  ng-show="elem.children.length > 0" class="glyphicon glyphicon-chevron-left"></div>
+        </div>
+        <div class="clikable" ng-click="elem.open = true;  level.open = level.open+1;newLevel(level.open);">
+          <a>{{elem.title}}</a>
+        </div>
+        <div class="level" ng-show="elem.level <= level.open && elem.open" ng-if="elem.children.length > 0" >
+          <div ng-if="elem.level < level.open" class="opac" ng-click="level.open = elem.level; newLevel(level.open);"></div>
+          <div id="{{elem.code}}" ng-class="{'scrollable' : elem.level == level.open}" ng-init="elem.level = 1;" perfect-scrollbar >
+            <h2>{{elem.title}}</h2>
+            <h2 ng-if="elem.level < level.open" class="rotate">{{elem.title}}</h2>
+            <span class="glyphicon glyphicon-search"></span><input type="text" placeholder="Search" ng-model="elem.word"/>
+            <ul ng-include src="'views/menu.html'" ng-model="elem">
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="main-content" class="col-xs-9 col-md-10 content" >
+  <div class="wrapper">
+    <h1 id="title">Multi-Level Menu</h1>
+    <p style="text-align:left;">Todo :<br/>
+      - Hide the scrollbar when scrolling is not needed.<br/>
+      - Overflow issue when "retour", blank space during transition.
+    </p>
+  </div>
+</div>

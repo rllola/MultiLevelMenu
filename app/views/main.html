@@ -1,22 +1,22 @@
 <div id="menu" class="col-xs-3 col-md-2">
-  <div ng-if="0 != level.open" class="opac" ng-click="level.open = 0; newLevel(level.open);"></div>
-  <div perfect-scrollbar ng-class="{'scrollable' : 0 == level.open}" >
+  <div ng-if="0 != mc.level.open" class="opac" ng-click="mc.level.open = 0; mc.newLevel(mc.level.open);"></div>
+  <div perfect-scrollbar ng-class="{'scrollable' : 0 == mc.level.open}" >
     <h1>Facets</h1>
-    <h1 ng-if="0 < level.open" class="rotate">Facets</h1>
+    <h1 ng-if="0 < mc.level.open" class="rotate">Facets</h1>
     <span class="glyphicon glyphicon-search"></span><input type="text" placeholder="Search" ng-model="word"/>
     <ul>
-      <li ng-repeat="elem in menu | filter:word" ng-init="elem.open = false;">
+      <li ng-repeat="elem in mc.menu | filter:word" ng-init="elem.open = false;">
         <div class="col-xs-1" style="margin-right: 5%;">
           <div  ng-show="elem.children.length > 0" class="glyphicon glyphicon-chevron-left"></div>
         </div>
-        <div class="clikable" ng-click="elem.open = true;  level.open = level.open+1;newLevel(level.open);">
+        <div class="clikable" ng-click="elem.open = true;  mc.level.open = mc.level.open+1; mc.newLevel(mc.level.open);">
           <a>{{elem.title}}</a>
         </div>
-        <div class="level" ng-show="elem.level <= level.open && elem.open" ng-if="elem.children.length > 0" >
-          <div ng-if="elem.level < level.open" class="opac" ng-click="level.open = elem.level; newLevel(level.open);"></div>
-          <div id="{{elem.code}}" ng-class="{'scrollable' : elem.level == level.open}" ng-init="elem.level = 1;" perfect-scrollbar >
+        <div class="level" ng-show="elem.level <= mc.level.open && elem.open" ng-if="elem.children.length > 0" >
+          <div ng-if="elem.level < mc.level.open" class="opac" ng-click="mc.level.open = elem.level; mc.newLevel(mc.level.open);"></div>
+          <div id="{{elem.code}}" ng-class="{'scrollable' : elem.level == mc.level.open}" ng-init="elem.level = 1;" perfect-scrollbar >
             <h2>{{elem.title}}</h2>
-            <h2 ng-if="elem.level < level.open" class="rotate">{{elem.title}}</h2>
+            <h2 ng-if="elem.level < mc.level.open" class="rotate">{{elem.title}}</h2>
             <span class="glyphicon glyphicon-search"></span><input type="text" placeholder="Search" ng-model="elem.word"/>
             <ul ng-include src="'views/menu.html'" ng-model="elem">
             </ul>
